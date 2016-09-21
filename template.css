@@ -1,0 +1,64 @@
+/* template.css for generating bookmark collection catalogue  */
+
+.infobox{
+    border-style: solid;
+    width: 15cm;
+    height: 9cm;
+    margin-bottom: 1cm;
+}
+
+.photobox{
+    border-style: solid;
+    display: inline-block;
+    width: 8cm;
+    height: 8cm;
+    margin-bottom: 1cm;
+}
+
+.info-text{
+    width: 100%;
+    height: 7.5cm;
+    background-color:red;
+    overflow: hidden;
+}
+
+.info-text > h1 {
+    font-size: 1.5em;
+}
+
+.info-text > h2 {
+    font-size: 1.2em;
+}
+
+.info-logo{
+    width: 6cm;
+    height: 1.5cm;
+    position: relative;
+    display: inline-block;
+    /* background-color: blue; */
+}
+
+.info-logo > .logo{
+    height: 100%;
+}
+
+.info-id{
+    width: 8cm;
+    height: 1.5cm;
+    position: relative;
+    top: -1cm;
+    display: inline-block;
+    /* background-color: green; */
+    text-align: center;
+    font-size: 1.5em;
+}
+
+.brand{
+    text-align: center;
+    font-size: 2em;
+}
+
+.brand > .logo{
+    margin-top: 0.5cm;
+    height: 2cm;
+}
