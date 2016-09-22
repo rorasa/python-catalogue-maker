@@ -5,6 +5,40 @@ import Tkinter as tk
 import tkFileDialog
 from shutil import copyfile
 
+class  Content:
+    collection_id = ''
+    title = ''
+    description = ''
+    info = ''
+    image1_enabled = True
+    image1_filename = ''
+    image2_enabled = True
+    image2_filename = ''
+
+def makeSourceFile(contents):
+    template_filename = BASENAME+'template.html'
+    source_filename = BASENAME+'source.html'
+
+    # open template file for editing
+    template_file = open(template_filename,'r')
+    template = template_file.read()
+
+    # parsing template parameters
+    template = template.replace("{{collection-id}}",contents.collection_id)
+    template = template.replace("{{title}}", contents.title)
+    template = template.replace("{{description}}", contents.description)
+    template = template.replace("{{info}}",contents.infotext)
+
+    template = template.replace("{{photo-1}}",'<img src="'+contents.image1_filename+'" alt="photo1">')
+    template = template.replace("{{photo-2}}",'<img src="'+contents.image2_filename+'" alt="photo2">')
+
+    # save processed html source
+    source_file = open(source_filename,'w')
+    source_file.write(template)
+    source_file.close()
+    
+    return source_filename
+
 EDITOR = os.environ.get('EDITOR','vim')
 BASENAME = os.path.dirname(os.path.abspath(__file__))+"/"
 list_tempfiles = []
@@ -47,24 +81,17 @@ dst = BASENAME+'img2'+file_extension
 copyfile(file_path,dst)
 list_tempfiles.append(dst)
 
-# open template file for editing
-template_file = open(BASENAME+'template.html','r')
-template = template_file.read()
-
 # parsing template parameters
-template = template.replace("{{collection-id}}",collection_id)
-template = template.replace("{{title}}", title)
-template = template.replace("{{description}}", description)
-template = template.replace("{{info}}",infotext)
+contents = Content()
+contents.collection_id = collection_id
+contents.title = title
+contents.description = description
+contents.infotext = infotext
+contents.image1_filename = list_tempfiles[0]
+contents.image2_filename = list_tempfiles[1]
 
-template = template.replace("{{photo-1}}",'<img src="'+list_tempfiles[0]+'" alt="photo1">')
-template = template.replace("{{photo-2}}",'<img src="'+list_tempfiles[1]+'" alt="photo2">')
-
-# save processed html source
-source_file = open(BASENAME+'source.html','w')
-source_file.write(template)
-source_file.close()
-list_tempfiles.append(BASENAME+'source.html')
+src_file = makeSourceFile(contents)
+list_tempfiles.append(src_file)
 
 # Creating PDF output
 output_filename = collection_id + '.pdf'
